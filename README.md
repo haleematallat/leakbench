@@ -17,6 +17,16 @@ python -m venv .venv && .venv/bin/pip install -r requirements.txt
 .venv/bin/python analyze.py logs                   # writes results/results.md
 ```
 
+### Free local models (Ollama)
+
+Ollama loads models with a 4,096-token context by default. An agent transcript outgrows that within a few turns, and the earlier turns are then dropped silently. The Modelfiles in `ollama/` raise the context to 32k:
+
+```bash
+ollama pull qwen3.5:4b && ollama create leakbench-qwen3.5-4b -f ollama/qwen3.5-4b-32k.Modelfile
+.venv/bin/pip install openai   # Inspect's Ollama provider uses the OpenAI-compatible API
+.venv/bin/inspect eval leakbench.py --model ollama/leakbench-qwen3.5-4b --epochs 3 --max-connections 2 --log-dir logs/runs
+```
+
 Task options (`-T name=value`):
 
 | option | values | default |
