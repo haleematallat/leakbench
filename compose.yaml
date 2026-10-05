@@ -1,0 +1,8 @@
+services:
+  default:
+    build: .
+    image: leakbench:latest
+    init: true
+    command: tail -f /dev/null
+    working_dir: /work
+    network_mode: none
